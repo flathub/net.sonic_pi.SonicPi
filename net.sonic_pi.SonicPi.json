@@ -152,15 +152,10 @@
         {
             "name": "sonicpi",
             "buildsystem": "simple",
-            "build-options": {
-                "env": {
-                    "PREFIX": "/app"
-                }
-            },
             "build-commands": [
-                "cd app/gui/qt && ./unix-prebuild.sh --build-aubio",
-                "cd app/gui/qt && ./unix-config.sh --config RelWithDebInfo",
-                "cmake --build app/gui/qt/build"
+                "cd app && ./linux-prebuild.sh --build-aubio",
+                "cd app && ./linux-config.sh --config RelWithDebInfo",
+                "cmake --build app/build"
             ],
             "cleanup": [
                 "/app/server/ruby/vendor/rugged-*/test",
@@ -189,17 +184,17 @@
                 "/app/server/ruby/vendor/ffi-*"
             ],
             "post-install": [
-                "install -Dm755 -t $FLATPAK_DEST/app/gui/qt/build app/gui/qt/build/sonic-pi",
+                "install -Dm755 -t $FLATPAK_DEST/app/build/gui/qt app/build/gui/qt/sonic-pi",
                 "install -Dm755 -t $FLATPAK_DEST/bin bin/sonic-pi",
                 "sed -e /^eval/d -i $FLATPAK_DEST/bin/sonic-pi",
+                "mkdir -p $FLATPAK_DEST/app/gui/qt/",
                 "cp -R app/gui/qt/theme $FLATPAK_DEST/app/gui/qt/theme",
                 "cp -R etc $FLATPAK_DEST",
-                "install -d $FLATPAK_DEST/app/server/erlang",
-                "cp -R app/server/erlang/*.beam $FLATPAK_DEST/app/server/erlang/",
                 "install -d $FLATPAK_DEST/app/server/ruby",
                 "cp -R app/server/ruby/*.rb app/server/ruby/bin app/server/ruby/lib $FLATPAK_DEST/app/server/ruby/",
                 "cp -R app/server/ruby/vendor $FLATPAK_DEST/app/server/ruby",
                 "cp -R app/server/native $FLATPAK_DEST/app/server",
+                "install -Dm644 -t $FLATPAK_DEST/app/server/erlang/sonic_pi_server/ebin app/server/erlang/sonic_pi_server/ebin/*.beam",
                 "install -Dm644 -t $FLATPAK_DEST/share/metainfo net.sonic_pi.SonicPi.appdata.xml",
                 "install -Dm644 -t $FLATPAK_DEST/share/icons/hicolor/128x128/apps sonic-pi.png",
                 "install -Dm644 -t $FLATPAK_DEST/share/applications sonic-pi.desktop",
@@ -208,8 +203,12 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/v3.2.2.tar.gz",
-                    "sha256": "3389bcff0ccd48018ee757f067bb12fe6205b3924bac547488de5a5d18a7fb32"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/v3.3.0.tar.gz",
+                    "sha256": "3fa6e4901b8704c7a7251d59c4b061025799adcc7a3c4242955faf4e79d72d59"
+                },
+                {
+                    "type": "patch",
+                    "path": "sonic-pi-fixes.patch"
                 },
                 {
                     "type": "file",
