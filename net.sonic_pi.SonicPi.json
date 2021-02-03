@@ -28,7 +28,7 @@
         "--env=QT_ENABLE_HIGHDPI_SCALING=1"
     ],
     "cleanup": [
-        "/bin/jackd",
+        "/bin/jack*",
         "/lib/libjack*",
         "/lib/jack"
     ],
@@ -203,8 +203,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/v3.3.0.tar.gz",
-                    "sha256": "3fa6e4901b8704c7a7251d59c4b061025799adcc7a3c4242955faf4e79d72d59"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/v3.3.1.tar.gz",
+                    "sha256": "6aab8e22daff1832b7af8221d7d124e4ae0adeaf1c726d8f62a8d3d57bd27d9c"
                 },
                 {
                     "type": "patch",
