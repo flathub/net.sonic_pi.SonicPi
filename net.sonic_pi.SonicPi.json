@@ -18,7 +18,7 @@
         "--device=all",
         /* For pipewire */
         "--filesystem=xdg-run/pipewire-0",
-        "--socket=system-bus",
+        "--system-talk-name=org.freedesktop.RealtimeKit1",
         "--talk-name=org.mpris.MediaPlayer2",
         "--own-name=org.mpris.MediaPlayer2.net.sonic_pi.SonicPi",
         /* Allow loading, saving files from anywhere (portals don’t work yet) */
