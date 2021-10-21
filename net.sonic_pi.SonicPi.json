@@ -1,10 +1,10 @@
 {
     "id": "net.sonic_pi.SonicPi",
     "base": "io.qt.qtwebengine.BaseApp",
-    "base-version": "5.15",
+    "base-version": "5.15-21.08",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.15",
+    "runtime-version": "5.15-21.08",
     "command": "sonic-pi",
     "rename-icon": "sonic-pi",
     "rename-desktop-file": "sonic-pi.desktop",
@@ -16,6 +16,8 @@
         "--socket=pulseaudio",
         /* MIDI */
         "--device=all",
+        /* OSC control */
+        "--share=network",
         /* For pipewire */
         "--filesystem=xdg-run/pipewire-0",
         "--system-talk-name=org.freedesktop.RealtimeKit1",
@@ -26,11 +28,6 @@
         /* Allow other instances to see lockfiles */
         "--env=TMPDIR=/var/tmp",
         "--env=QT_ENABLE_HIGHDPI_SCALING=1"
-    ],
-    "cleanup": [
-        "/bin/jackd",
-        "/lib/libjack*",
-        "/lib/jack"
     ],
     "cleanup-commands": [
         "/app/cleanup-BaseApp.sh"
