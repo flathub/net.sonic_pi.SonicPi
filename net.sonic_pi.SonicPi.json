@@ -6,8 +6,6 @@
     "sdk": "org.kde.Sdk",
     "runtime-version": "5.15-21.08",
     "command": "sonic-pi",
-    "rename-icon": "sonic-pi",
-    "rename-desktop-file": "sonic-pi.desktop",
     "finish-args": [
         /* X11 + XShm access */
         "--share=ipc",
@@ -28,6 +26,11 @@
         /* Allow other instances to see lockfiles */
         "--env=TMPDIR=/var/tmp",
         "--env=QT_ENABLE_HIGHDPI_SCALING=1"
+    ],
+    "cleanup": [
+        "/bin/jackd",
+        "/lib/libjack*",
+        "/lib/jack"
     ],
     "cleanup-commands": [
         "/app/cleanup-BaseApp.sh"
@@ -193,8 +196,9 @@
                 "cp -R app/server/native $FLATPAK_DEST/app/server",
                 "install -Dm644 -t $FLATPAK_DEST/app/server/erlang/sonic_pi_server/ebin app/server/erlang/sonic_pi_server/ebin/*.beam",
                 "install -Dm644 -t $FLATPAK_DEST/share/metainfo net.sonic_pi.SonicPi.appdata.xml",
-                "install -Dm644 -t $FLATPAK_DEST/share/icons/hicolor/128x128/apps sonic-pi.png",
-                "install -Dm644 -t $FLATPAK_DEST/share/applications sonic-pi.desktop",
+                "install -Dm644 -t $FLATPAK_DEST/share/icons/hicolor/128x128/apps net.sonic_pi.SonicPi.png",
+                "install -Dm644 app/gui/qt/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
+                "install -Dm644 -t $FLATPAK_DEST/share/applications net.sonic_pi.SonicPi.desktop",
                 "install -Dm644 -t $FLATPAK_DEST/share/licenses/sonicpi LICENSE.md"
             ],
             "sources": [
@@ -209,11 +213,11 @@
                 },
                 {
                     "type": "file",
-                    "path": "sonic-pi.png"
+                    "path": "net.sonic_pi.SonicPi.png"
                 },
                 {
                     "type": "file",
-                    "path": "sonic-pi.desktop"
+                    "path": "net.sonic_pi.SonicPi.desktop"
                 },
                 {
                     "type": "file",
