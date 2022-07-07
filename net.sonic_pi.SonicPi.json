@@ -109,6 +109,7 @@
                 "/lib/gedit"
             ],
             "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
                 "-DSC_EL=NO"
             ],
             "sources": [
@@ -124,7 +125,7 @@
             "buildsystem": "cmake-ninja",
             "config-opts": [
                 "-DSC_PATH=/app/include/SuperCollider/",
-                "-DCMAKE_BUILD_TYPE=Release",
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
                 "-DSUPERNOVA=ON"
             ],
             "sources": [
