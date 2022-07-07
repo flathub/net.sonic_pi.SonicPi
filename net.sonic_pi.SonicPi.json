@@ -213,6 +213,10 @@
                     "path": "sonic-pi-fixes.patch"
                 },
                 {
+                    "type": "patch",
+                    "path": "sonic-pi-sc-path.patch"
+                },
+                {
                     "type": "file",
                     "path": "net.sonic_pi.SonicPi.png"
                 },
