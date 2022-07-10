@@ -35,6 +35,13 @@
     "cleanup-commands": [
         "/app/cleanup-BaseApp.sh"
     ],
+    "build-options": {
+        "env": {
+            "MIX_XDG": "1",
+            "MIX_ARCHIVES": "/app/mix/archives",
+            "REBAR_OFFLINE": "1"
+        }
+    },
     "modules": [
         {
             "name": "erlang-otp",
@@ -42,8 +49,6 @@
                 "--disable-pgo",
 	        "--without-hipe",
 	        "--without-javac", /* "--without-ssl", */
-	        "--without-erl_interface", /* "--without-asn1", */
-	        "--without-dialyzer",
 	        "--without-eldap",
 	        "--without-snmp",
 	        "--without-megaco",
@@ -51,20 +56,9 @@
 	        "--without-os_mon",
 	        "--without-mnesia",
 	        "--without-otp_mibs",
-	        "--without-common-test",
-	        "--without-debugger",
-	        "--without-edoc",
-	        "--without-erl_docgen",
-	        "--without-et",
-	        "--without-eunit",
-	        "--without-ftp",
-	        "--without-parsetools",
-	        "--without-reltool",
-	        "--without-sasl",
-	        "--without-ssh",
-	        "--without-syntax_tools",
-	        "--without-tftp",
-	        "--without-tools"
+                "--without-tftp",
+                "--without-ftp",
+                "--without-ssh"
             ],
             "cleanup": [
                 "/lib/erlang/erts-11.1/include",
@@ -77,8 +71,27 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://erlang.org/download/otp_src_23.1.tar.gz",
-	            "sha256": "cb5b7246eeaac9298c51c9915386df2f784e82a3f7ff93b68453591f0b370400"
+                    "url": "https://github.com/erlang/otp/releases/download/OTP-24.3.4.2/otp_src_24.3.4.2.tar.gz",
+	            "sha256": "0376d50f867a29426d47600056e8cc49c95b51ef172b6b9030628e35aecd46af"
+                }
+            ]
+        },
+        {
+            "name": "elixir",
+            "buildsystem": "simple",
+            "build-options": {
+                "env": {
+                    "PREFIX": "/app"
+                }
+            },
+            "build-commands": [
+                "make install"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/elixir-lang/elixir.git",
+                    "tag": "v1.12"
                 }
             ]
         },
@@ -151,12 +164,235 @@
             ]
         },
         {
-            "name": "sonicpi",
+            "name": "rtmidi",
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig",
+                "*.la",
+                "*.a",
+                "*.so"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.music.mcgill.ca/~gary/rtmidi/release/rtmidi-5.0.0.tar.gz",
+                    "sha256": "48db0ed58c8c0e207b5d7327a0210b5bcaeb50e26387935d02829239b0f3c2b9"
+                }
+            ]
+        },
+        {
+            "name": "hex",
             "buildsystem": "simple",
             "build-commands": [
-                "cd app && ./linux-prebuild.sh --build-aubio",
-                "cd app && ./linux-config.sh --config RelWithDebInfo",
-                "cmake --build app/build"
+                "MIX_ENV=prod mix archive.build -o hex.ez",
+                "mix archive.install hex.ez --force"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/hexpm/hex/archive/refs/tags/v1.0.1.tar.gz",
+                    "sha256": "cf19c8a11c7c306d9b6e00533e46326dd0d4e18d771ef3b457da2c9f69fa4b31"
+                }
+            ]
+        },
+        {
+            "name": "gettext",
+            "buildsystem": "simple",
+            "build-commands": [
+                "MIX_ENV=prod mix archive.build -o gettext.ez",
+                "mix archive.install gettext.ez --force"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/elixir-gettext/gettext/archive/refs/tags/v0.19.1.tar.gz",
+                    "sha256": "ed47b6910b5d5f73421e329569d5cd38b441f90f2b72f74464b2ca85c574b2ed"
+                }
+            ]
+        },
+        {
+            "name": "aubio",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./waf configure --prefix=$FLATPAK_DEST build",
+                "./waf install"
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/pkgconfig",
+                "/share/doc",
+                "*.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://aubio.org/pub/aubio-0.4.7.tar.bz2",
+                    "sha256": "cbed4afec5ab3a1a6300c7e3af0a1369379aa94259f5e701a8ca905cdd9fa041"
+                }
+            ]
+        },
+        {
+            "name": "platform-folders",
+            "buildsystem": "cmake-ninja",
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/sago007/PlatformFolders.git",
+                    "tag": "4.2.0"
+                }
+            ]
+        },
+        {
+            "name": "reproc",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DREPROC++=ON"
+            ],
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/DaanDeMeyer/reproc.git",
+                    "tag": "v14.2.4"
+                }
+            ]
+        },
+        {
+            "name": "kissfft",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DKISSFFT_TOOLS=OFF"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/cmake",
+                "/lib/pkgconfig"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/mborgerding/kissfft.git",
+                    "tag": "131.1.0"
+                }
+            ]
+        },
+        {
+            "name": "crossguid",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCROSSGUID_TESTS=OFF"
+            ],
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/graeme-hill/crossguid.git",
+                    "//": "The 0.2.2 doesn't even have .pc or install rules",
+                    "commit": "ca1bf4b810e2d188d04cb6286f957008ee1b7681"
+                }
+            ]
+        },
+        {
+            "name": "catch2",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/catchorg/Catch2.git",
+                    "tag": "v3.1.0"
+                }
+            ]
+        },
+        {
+            "name": "qscintilla",
+            "buildsystem": "qmake",
+            "subdir": "src",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.riverbankcomputing.com/static/Downloads/QScintilla/2.13.3/QScintilla_src-2.13.3.tar.gz",
+                    "sha256": "711d28e37c8fccaa8229e8e39a5b3b2d97f3fffc63da10b71c71b84fa3649398"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/qscintilla-lib-paths.patch"
+                }
+            ]
+        },
+        {
+            "name": "rebar",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./bootstrap --offline"
+            ],
+            "modules": [
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/erlang/rebar3.git",
+                    "tag": "3.19.0"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/jcomellas/getopt.git",
+                    "tag": "v1.0.1",
+                    "dest": "_build/default/lib/getopt"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/project-fifo/cf.git",
+                    "tag": "v0.3.1",
+                    "dest": "_build/default/lib/cf"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/erlware/erlware_commons.git",
+                    "tag": "v1.4.0",
+                    "dest": "_build/default/lib/erlware_commons"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/tsloughter/providers.git",
+                    "tag": "1.9.0",
+                    "dest": "_build/default/lib/providers"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/certifi/erlang-certifi.git",
+                    "tag": "2.9.0",
+                    "dest": "_build/default/lib/certifi"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/soranoba/bbmustache.git",
+                    "tag": "v1.12.2",
+                    "dest": "_build/default/lib/bbmustache"
+                }
+            ]
+        },
+        {
+            "name": "sonicpi",
+            "buildsystem": "simple",
+            "build-options": {
+                "env": {
+                    "CMAKE_PREFIX_PATH": "/app"
+                }
+            },
+            "build-commands": [
+                "cd app && ./linux-prebuild.sh --offline-build",
+                "cd app && ./linux-config.sh --offline-build -n --config RelWithDebInfo",
+                "cmake --build app/build",
+                "cd app && ./linux-post-tau-prod-release.sh --offline-build -n -s"
             ],
             "cleanup": [
                 "/app/server/ruby/vendor/rugged-*/test",
@@ -205,16 +441,66 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/v3.3.1.tar.gz",
-                    "sha256": "6aab8e22daff1832b7af8221d7d124e4ae0adeaf1c726d8f62a8d3d57bd27d9c"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/v4.0.3.tar.gz",
+                    "sha256": "57007eb6da07ad18bac7295a0011e4d3902d116ef5e572d22daf27c73a2db217"
                 },
                 {
                     "type": "patch",
-                    "path": "sonic-pi-fixes.patch"
+                    "path": "patches/sonic-pi-build-fixes.patch"
                 },
                 {
-                    "type": "patch",
-                    "path": "sonic-pi-sc-path.patch"
+                    "type": "git",
+                    "url": "https://github.com/whatyouhide/stream_data.git",
+                    "tag": "v0.4.0",
+                    "dest": "app/server/beam/tau/deps/stream_data"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/elixir-lang/plug.git",
+                    "tag": "v1.6.1",
+                    "dest": "app/server/beam/tau/deps/plug"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/elixir-plug/mime.git",
+                    "tag": "v1.3.0",
+                    "dest": "app/server/beam/tau/deps/mime"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/PSPDFKit-labs/bypass.git",
+                    "tag": "v2.1.0",
+                    "dest": "app/server/beam/tau/deps/bypass"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/ninenines/cowboy.git",
+                    "tag": "1.0.4",
+                    "dest": "app/server/beam/tau/deps/cowboy"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/ninenines/cowlib.git",
+                    "tag": "1.0.2",
+                    "dest": "app/server/beam/tau/deps/cowlib"
+                },
+                {
+                    "type": "git",
+                    "url": "https://github.com/ninenines/ranch.git",
+                    "tag": "1.2.1",
+                    "dest": "app/server/beam/tau/deps/ranch"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/beam-telemetry/telemetry/archive/refs/tags/v1.0.0.tar.gz",
+                    "sha256": "8df23cd5fbbf77c00f63abec28af59411c1f20d869ebfe2d2488623fd88e5e5f",
+                    "dest": "app/server/beam/tau/deps/telemetry"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/beam-telemetry/telemetry_metrics/archive/refs/tags/v0.6.1.tar.gz",
+                    "sha256": "e6d59a901bf02f4bdc46f8181c5628c694382b3c99346edaf82c20f0a98467df",
+                    "dest": "app/server/beam/tau/deps/telemetry_metrics"
                 },
                 {
                     "type": "file",
