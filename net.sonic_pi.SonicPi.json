@@ -40,31 +40,18 @@
             "name": "erlang-otp",
             "config-opts": [
                 "--disable-pgo",
-	        "--without-hipe",
-	        "--without-javac", /* "--without-ssl", */
-	        "--without-erl_interface", /* "--without-asn1", */
-	        "--without-dialyzer",
-	        "--without-eldap",
-	        "--without-snmp",
-	        "--without-megaco",
-	        "--without-diameter",
-	        "--without-os_mon",
-	        "--without-mnesia",
-	        "--without-otp_mibs",
-	        "--without-common-test",
-	        "--without-debugger",
-	        "--without-edoc",
-	        "--without-erl_docgen",
-	        "--without-et",
-	        "--without-eunit",
-	        "--without-ftp",
-	        "--without-parsetools",
-	        "--without-reltool",
-	        "--without-sasl",
-	        "--without-ssh",
-	        "--without-syntax_tools",
-	        "--without-tftp",
-	        "--without-tools"
+                "--without-hipe",
+                "--without-javac",
+                "--without-eldap",
+                "--without-snmp",
+                "--without-megaco",
+                "--without-diameter",
+                "--without-os_mon",
+                "--without-mnesia",
+                "--without-otp_mibs",
+                "--without-tftp",
+                "--without-ftp",
+                "--without-ssh"
             ],
             "cleanup": [
                 "/lib/erlang/erts-11.1/include",
@@ -72,13 +59,32 @@
                 "*.a"
             ],
             "build-options": {
-	        "no-debuginfo": true
+                "no-debuginfo": true
             },
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://erlang.org/download/otp_src_23.1.tar.gz",
-	            "sha256": "cb5b7246eeaac9298c51c9915386df2f784e82a3f7ff93b68453591f0b370400"
+                    "url": "https://github.com/erlang/otp/releases/download/OTP-24.3.4.2/otp_src_24.3.4.2.tar.gz",
+                    "sha256": "0376d50f867a29426d47600056e8cc49c95b51ef172b6b9030628e35aecd46af"
+                }
+            ]
+        },
+        {
+            "name": "elixir",
+            "buildsystem": "simple",
+            "build-options": {
+                "env": {
+                    "PREFIX": "/app"
+                }
+            },
+            "build-commands": [
+                "make install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/elixir-lang/elixir/archive/v1.14.0.zip",
+                    "sha256": "6cece7317044233996e6056e86a09e8ba25971c5f60130738d0b6baccb3b99e0"
                 }
             ]
         },
@@ -93,8 +99,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.2.tar.gz",
-                    "sha256": "6e5706d0d4ee4e1e2f883db9d768586b4d06567debea353c796ec45e8321c3d4"
+                    "url": "https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.2.tar.gz",
+                    "sha256": "61843112389f02b735428b53bb64cf988ad9fb81858b8248e22e57336f24a83e"
                 }
             ]
         },
@@ -137,26 +143,161 @@
             ]
         },
         {
-            "name": "ruby-ffi",
-            "buildsystem": "simple",
-            "build-commands": [
-                "gem install --local ffi-1.13.1.gem"
+            "name": "rtmidi",
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig",
+                "*.la",
+                "*.a",
+                "*.so"
             ],
             "sources": [
                 {
-                    "type": "file",
-                    "url": "https://rubygems.org/downloads/ffi-1.13.1.gem",
-                    "sha256": "4e15f52ee45af7c5674d656041855448adbb5022618be252cd602d81b8e2978a"
+                    "type": "archive",
+                    "url": "http://www.music.mcgill.ca/~gary/rtmidi/release/rtmidi-5.0.0.tar.gz",
+                    "sha256": "48db0ed58c8c0e207b5d7327a0210b5bcaeb50e26387935d02829239b0f3c2b9"
+                }
+            ]
+        },
+        {
+            "name": "aubio",
+            "buildsystem": "simple",
+            "build-commands": [
+                "./waf configure --prefix=$FLATPAK_DEST build",
+                "./waf install"
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/pkgconfig",
+                "/share/doc",
+                "*.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://aubio.org/pub/aubio-0.4.7.tar.bz2",
+                    "sha256": "cbed4afec5ab3a1a6300c7e3af0a1369379aa94259f5e701a8ca905cdd9fa041"
+                }
+            ]
+        },
+        {
+            "name": "platform-folders",
+            "buildsystem": "cmake-ninja",
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/sago007/PlatformFolders.git",
+                    "tag": "4.2.0"
+                }
+            ]
+        },
+        {
+            "name": "reproc",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DREPROC++=ON"
+            ],
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/DaanDeMeyer/reproc.git",
+                    "tag": "v14.2.4"
+                }
+            ]
+        },
+        {
+            "name": "kissfft",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DKISSFFT_TOOLS=OFF"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/cmake",
+                "/lib/pkgconfig"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/mborgerding/kissfft.git",
+                    "tag": "131.1.0"
+                }
+            ]
+        },
+        {
+            "name": "crossguid",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCROSSGUID_TESTS=OFF"
+            ],
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/graeme-hill/crossguid.git",
+                    "//": "The 0.2.2 doesn't even have .pc or install rules",
+                    "commit": "ca1bf4b810e2d188d04cb6286f957008ee1b7681"
+                }
+            ]
+        },
+        {
+            "name": "catch2",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/catchorg/Catch2.git",
+                    "tag": "v3.1.0"
+                }
+            ]
+        },
+        {
+            "name": "qscintilla",
+            "buildsystem": "qmake",
+            "subdir": "src",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.riverbankcomputing.com/static/Downloads/QScintilla/2.13.3/QScintilla_src-2.13.3.tar.gz",
+                    "sha256": "711d28e37c8fccaa8229e8e39a5b3b2d97f3fffc63da10b71c71b84fa3649398"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/qscintilla-lib-paths.patch"
                 }
             ]
         },
         {
             "name": "sonicpi",
             "buildsystem": "simple",
+            "build-options": {
+                "env": {
+                    "CMAKE_PREFIX_PATH": "/app",
+                    "MIX_XDG": "true",
+                    "MIX_HOME": "/run/build/sonicpi/.mix",
+                    "MIX_ENV": "prod",
+                    "HEX_HOME": "/run/build/sonicpi/.hex",
+                    "HEX_OFFLINE": "true"
+                }
+            },
             "build-commands": [
-                "cd app && ./linux-prebuild.sh --build-aubio",
-                "cd app && ./linux-config.sh --config RelWithDebInfo",
-                "cmake --build app/build"
+                "cd app && ./linux-prebuild.sh --offline-build",
+                "cd app && ./linux-config.sh --offline-build -n --config RelWithDebInfo",
+                "cmake --build app/build",
+                "cd app/server/beam/tau && mix archive.install ../../../../hex.ez --force",
+                "cd app/server/beam/tau && mix local.rebar rebar3 ../../../../rebar3",
+                "cd app/server/beam/tau && mix deps.get && mix release --overwrite",
+                "cd app && ./linux-release.sh"
             ],
             "cleanup": [
                 "/app/server/ruby/vendor/rugged-*/test",
@@ -185,17 +326,7 @@
                 "/app/server/ruby/vendor/ffi-*"
             ],
             "post-install": [
-                "install -Dm755 -t $FLATPAK_DEST/app/build/gui/qt app/build/gui/qt/sonic-pi",
-                "install -Dm755 -t $FLATPAK_DEST/bin bin/sonic-pi",
-                "sed -e /^eval/d -i $FLATPAK_DEST/bin/sonic-pi",
-                "mkdir -p $FLATPAK_DEST/app/gui/qt/",
-                "cp -R app/gui/qt/theme $FLATPAK_DEST/app/gui/qt/theme",
-                "cp -R etc $FLATPAK_DEST",
-                "install -d $FLATPAK_DEST/app/server/ruby",
-                "cp -R app/server/ruby/*.rb app/server/ruby/bin app/server/ruby/lib $FLATPAK_DEST/app/server/ruby/",
-                "cp -R app/server/ruby/vendor $FLATPAK_DEST/app/server/ruby",
-                "cp -R app/server/native $FLATPAK_DEST/app/server",
-                "install -Dm644 -t $FLATPAK_DEST/app/server/erlang/sonic_pi_server/ebin app/server/erlang/sonic_pi_server/ebin/*.beam",
+                "cd app/build/linux_dist && cp -av * $FLATPAK_DEST",
                 "install -Dm644 -t $FLATPAK_DEST/share/metainfo net.sonic_pi.SonicPi.appdata.xml",
                 "install -Dm644 -t $FLATPAK_DEST/share/icons/hicolor/128x128/apps net.sonic_pi.SonicPi.png",
                 "install -Dm644 app/gui/qt/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
@@ -205,17 +336,26 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/v3.3.1.tar.gz",
-                    "sha256": "6aab8e22daff1832b7af8221d7d124e4ae0adeaf1c726d8f62a8d3d57bd27d9c"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.2.0.tar.gz",
+                    "sha256": "22376b5acf528582c6b8f43a6c53df368775ac4cc7b1136fdfc073c05d2ad56d"
                 },
                 {
                     "type": "patch",
-                    "path": "sonic-pi-fixes.patch"
+                    "path": "patches/sonic-pi-build-fixes.patch"
                 },
                 {
-                    "type": "patch",
-                    "path": "sonic-pi-sc-path.patch"
+                    "type": "file",
+                    "url": "https://repo.hex.pm/installs/1.13.0/hex-1.0.1.ez",
+                    "dest-filename": "hex.ez",
+                    "sha256": "84bb9186d87ce91457b2aaaf5bf2d82cbe971240ee8e405228c8bdbb6af699fb"
                 },
+                {
+                    "type": "file",
+                    "url": "https://repo.hex.pm/installs/1.13.0/rebar3-3.15.2",
+                    "dest-filename": "rebar3",
+                    "sha256": "9c9d0fa142e60711147d23de7520fab4a8e32608fad5fddfbcb764e4ce98505f"
+                },
+                "sources/elixir-dependencies.json",
                 {
                     "type": "file",
                     "path": "net.sonic_pi.SonicPi.png"
