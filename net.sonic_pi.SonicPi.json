@@ -333,8 +333,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.2.0.tar.gz",
-                    "sha256": "22376b5acf528582c6b8f43a6c53df368775ac4cc7b1136fdfc073c05d2ad56d"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.3.0.tar.gz",
+                    "sha256": "95b02c5c6d0335bed7dd4f7d577b25686391e4f806db416fcf9be139fe39fd84"
                 },
                 {
                     "type": "patch",
