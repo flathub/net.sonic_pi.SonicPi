@@ -1,10 +1,10 @@
 {
     "id": "net.sonic_pi.SonicPi",
     "base": "io.qt.qtwebengine.BaseApp",
-    "base-version": "5.15-21.08",
+    "base-version": "5.15-22.08",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.15-21.08",
+    "runtime-version": "5.15-22.08",
     "command": "sonic-pi",
     "finish-args": [
         /* X11 + XShm access */
@@ -18,7 +18,6 @@
         "--share=network",
         /* For pipewire */
         "--filesystem=xdg-run/pipewire-0",
-        "--system-talk-name=org.freedesktop.RealtimeKit1",
         "--talk-name=org.mpris.MediaPlayer2",
         "--own-name=org.mpris.MediaPlayer2.net.sonic_pi.SonicPi",
         /* Allow loading, saving files from anywhere (portals don’t work yet) */
@@ -26,11 +25,6 @@
         /* Allow other instances to see lockfiles */
         "--env=TMPDIR=/var/tmp",
         "--env=QT_ENABLE_HIGHDPI_SCALING=1"
-    ],
-    "cleanup": [
-        "/bin/jackd",
-        "/lib/libjack*",
-        "/lib/jack"
     ],
     "cleanup-commands": [
         "/app/cleanup-BaseApp.sh"
@@ -104,7 +98,6 @@
                 }
             ]
         },
-        "shared-modules/linux-audio/jack2.json",
         "shared-modules/linux-audio/fftw3f.json",
         {
             "name": "supercollider",
@@ -121,8 +114,12 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/supercollider/supercollider/releases/download/Version-3.11.1/SuperCollider-3.11.1-Source.tar.bz2",
-                    "sha256": "2dd2f8179a55de4735ac940e2e2d0df4e68cc3a33172628e4dd99ae89c74856b"
+                    "url": "https://github.com/supercollider/supercollider/releases/download/Version-3.11.2/SuperCollider-3.11.2-Source.tar.bz2",
+                    "sha256": "c22c32c6bc482671d4fb8f51672df712d97a6a6277235c4da2312910303a0506"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/sc-sdnfile.patch"
                 }
             ]
         },
@@ -137,8 +134,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/supercollider/sc3-plugins/releases/download/Version-3.11.0/sc3-plugins-3.11.0-Source.tar.bz2",
-                    "sha256": "96a1be7413662ba7c36d55689f627209e6be8daa168253a5c98075a48808b28c"
+                    "url": "https://github.com/supercollider/sc3-plugins/releases/download/Version-3.11.1/sc3-plugins-3.11.1-Source.tar.bz2",
+                    "sha256": "263526bbb3c9fb1df24626ebf80bf68134449e0e757cfa3b464f81e32d89be44"
                 }
             ]
         },
@@ -163,7 +160,7 @@
             "name": "aubio",
             "buildsystem": "simple",
             "build-commands": [
-                "./waf configure --prefix=$FLATPAK_DEST build",
+                "./waf configure --prefix=$FLATPAK_DEST --disable-avcodec build -j $FLATPAK_BUILDER_N_JOBS",
                 "./waf install"
             ],
             "cleanup": [
