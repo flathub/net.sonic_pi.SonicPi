@@ -26,6 +26,11 @@
         "--env=TMPDIR=/var/tmp",
         "--env=QT_ENABLE_HIGHDPI_SCALING=1"
     ],
+    "cleanup": [
+        "/bin/jackd",
+        "/lib/libjack*",
+        "/lib/jack"
+    ],
     "cleanup-commands": [
         "/app/cleanup-BaseApp.sh"
     ],
@@ -98,6 +103,7 @@
                 }
             ]
         },
+        "shared-modules/linux-audio/jack2.json",
         "shared-modules/linux-audio/fftw3f.json",
         {
             "name": "supercollider",
