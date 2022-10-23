@@ -95,6 +95,9 @@
             "cleanup": [
                 "/include"
             ],
+            "post-install": [
+                "cp /usr/lib/${FLATPAK_ARCH}-linux-gnu/libyaml-0.so* ${FLATPAK_DEST}/lib"
+            ],
             "sources": [
                 {
                     "type": "archive",
