@@ -345,8 +345,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.3.0.tar.gz",
-                    "sha256": "95b02c5c6d0335bed7dd4f7d577b25686391e4f806db416fcf9be139fe39fd84"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.4.0.tar.gz",
+                    "sha256": "4d00409f9bc8027579b6120ee537a4c54e0a2fae7b5501dcf3c810ff05c02bab"
                 },
                 {
                     "type": "patch",
@@ -362,7 +362,7 @@
                     "type": "file",
                     "url": "https://repo.hex.pm/installs/1.13.0/rebar3-3.15.2",
                     "dest-filename": "rebar3",
-                    "sha256": "9c9d0fa142e60711147d23de7520fab4a8e32608fad5fddfbcb764e4ce98505f"
+                    "sha256": "490f1ed8b2f6a6629f9680e5e9f477d101af03b13bbccfa2e5f314ab7ab0ba44"
                 },
                 "sources/elixir-dependencies.json",
                 {
