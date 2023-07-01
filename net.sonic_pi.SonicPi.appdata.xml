@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2020 Soni-Pi Developers -->
+<!-- Copyright 2020 Sonic-Pi Developers -->
 <component type="desktop">
  <id>net.sonic_pi.SonicPi</id>
  <metadata_license>CC0</metadata_license>
  <project_license>MIT and CC-BY-SA-4.0+</project_license>
  <name>Sonic Pi</name>
- <summary>A code-based music creation and performance tool.</summary>
+ <summary>A code-based music creation and performance tool</summary>
  <description>
    <p>
      Sonic Pi is a code-based music creation and performance tool.

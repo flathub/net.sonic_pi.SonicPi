@@ -337,7 +337,6 @@
             "post-install": [
                 "cd app/build/linux_dist && cp -av * $FLATPAK_DEST",
                 "install -Dm644 -t $FLATPAK_DEST/share/metainfo net.sonic_pi.SonicPi.appdata.xml",
-                "install -Dm644 -t $FLATPAK_DEST/share/icons/hicolor/128x128/apps net.sonic_pi.SonicPi.png",
                 "install -Dm644 app/gui/qt/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
                 "install -Dm644 -t $FLATPAK_DEST/share/applications net.sonic_pi.SonicPi.desktop",
                 "install -Dm644 -t $FLATPAK_DEST/share/licenses/sonicpi LICENSE.md"
@@ -365,10 +364,6 @@
                     "sha256": "490f1ed8b2f6a6629f9680e5e9f477d101af03b13bbccfa2e5f314ab7ab0ba44"
                 },
                 "sources/elixir-dependencies.json",
-                {
-                    "type": "file",
-                    "path": "net.sonic_pi.SonicPi.png"
-                },
                 {
                     "type": "file",
                     "path": "net.sonic_pi.SonicPi.desktop"
