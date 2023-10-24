@@ -1,10 +1,10 @@
 {
     "id": "net.sonic_pi.SonicPi",
     "base": "io.qt.qtwebengine.BaseApp",
-    "base-version": "5.15-22.08",
+    "base-version": "5.15-23.08",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.15-22.08",
+    "runtime-version": "5.15-23.08",
     "command": "sonic-pi",
     "finish-args": [
         /* X11 + XShm access */
@@ -123,8 +123,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/jackaudio/jack2/archive/v1.9.17.tar.gz",
-                    "sha256": "38f674bbc57852a8eb3d9faa1f96a0912d26f7d5df14c11005ad499c8ae352f2"
+                    "url": "https://github.com/jackaudio/jack2/archive/v1.9.22.tar.gz",
+                    "sha256": "1e42b9fc4ad7db7befd414d45ab2f8a159c0b30fcd6eee452be662298766a849"
                 }
             ]
         },
@@ -203,8 +203,13 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://aubio.org/pub/aubio-0.4.7.tar.bz2",
-                    "sha256": "cbed4afec5ab3a1a6300c7e3af0a1369379aa94259f5e701a8ca905cdd9fa041"
+                    "url": "https://aubio.org/pub/aubio-0.4.9.tar.bz2",
+                    "sha256": "d48282ae4dab83b3dc94c16cf011bcb63835c1c02b515490e1883049c3d1f3da"
+                },
+                {
+                    "//": "Fix vendored old waf for python 3.11",
+                    "type": "patch",
+                    "path": "patches/aubio.patch"
                 }
             ]
         },
@@ -235,7 +240,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/DaanDeMeyer/reproc.git",
-                    "tag": "v14.2.4"
+                    "//": "Unreleased fix for GCC 13; TODO: point to first release > 14.2.4 when it's out",
+                    "commit": "9f399675b821e175f85ac3ee6e3fd2e6056573eb"
                 }
             ]
         },
@@ -273,6 +279,11 @@
                     "url": "https://github.com/graeme-hill/crossguid.git",
                     "//": "The 0.2.2 doesn't even have .pc or install rules",
                     "commit": "ca1bf4b810e2d188d04cb6286f957008ee1b7681"
+                },
+                {
+                    "//": "Fix for GCC 13",
+                    "type": "patch",
+                    "path": "patches/crossguid.patch"
                 }
             ]
         },
@@ -287,7 +298,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/catchorg/Catch2.git",
-                    "tag": "v3.1.0"
+                    "tag": "v3.4.0"
                 }
             ]
         },
