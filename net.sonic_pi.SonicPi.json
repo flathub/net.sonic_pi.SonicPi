@@ -375,9 +375,10 @@
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/heads/dev.zip",
-                    "sha256": "88e5e8ad773fdd99491ffa578d20425bbc29f2ff30995d8a6c2f81c39ec19f56"
+                    "//": "TODO: Point to 4.5.0 tarball when it's released",
+                    "type": "git",
+                    "url": "https://github.com/sonic-pi-net/sonic-pi.git",
+                    "commit": "b231929c9fdaceabf727c45a4cde18e4dbc4b942"
                 },
                 {
                     "type": "patch",
