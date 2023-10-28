@@ -357,11 +357,10 @@
                 },
                 {
                     "type": "patch",
-                    "path": "patches/sonic-pi-build-fixes.patch"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/sonic-pi-daemon.patch"
+                    "paths": [ 
+                        "patches/sonic-pi-build-fixes.patch",
+                        "patches/sonic-pi-daemon.patch"
+                    ]
                 },
                 {
                     "type": "file",
