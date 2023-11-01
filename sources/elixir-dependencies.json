@@ -43,9 +43,9 @@
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/ecto-3.10.2.tar",
+        "url": "https://repo.hex.pm/tarballs/ecto-3.10.3.tar",
         "dest": ".hex/packages/hexpm",
-        "sha256": "6a895778f0d7648a4b34b486af59a1c8009041fbdf2b17f1ac215eb829c60235"
+        "sha256": "44bec74e2364d491d70f7e42cd0d690922659d329f6465e89feb8a34e8cd3433"
     },
     {
         "type": "file",
@@ -79,9 +79,9 @@
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/gettext-0.22.2.tar",
+        "url": "https://repo.hex.pm/tarballs/gettext-0.22.3.tar",
         "dest": ".hex/packages/hexpm",
-        "sha256": "8a2d389673aea82d7eae387e6a2ccc12660610080ae7beb19452cfdc1ec30f60"
+        "sha256": "935f23447713954a6866f1bb28c3a878c4c011e802bcd68a726f5e558e4b64bd"
     },
     {
         "type": "file",
@@ -91,9 +91,9 @@
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/jason-1.4.0.tar",
+        "url": "https://repo.hex.pm/tarballs/jason-1.4.1.tar",
         "dest": ".hex/packages/hexpm",
-        "sha256": "79a3791085b2a0f743ca04cec0f7be26443738779d09302e01318f97bdb82121"
+        "sha256": "fbb01ecdfd565b56261302f7e1fcc27c4fb8f32d56eab74db621fc154604a7a1"
     },
     {
         "type": "file",
@@ -109,15 +109,15 @@
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/petal_components-1.2.9.tar",
+        "url": "https://repo.hex.pm/tarballs/petal_components-1.2.14.tar",
         "dest": ".hex/packages/hexpm",
-        "sha256": "c91a489c9230408fb7f66c931d4bc14367e0ee0a8f904cd70ff16883eb988f0c"
+        "sha256": "7691d54e698a36ff1d3ee39c885aceb9167e70decb0241c940eb171280231db8"
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/phoenix-1.7.6.tar",
+        "url": "https://repo.hex.pm/tarballs/phoenix-1.7.7.tar",
         "dest": ".hex/packages/hexpm",
-        "sha256": "f6b4be7780402bb060cbc6e83f1b6d3f5673b674ba73cc4a7dd47db0322dfb88"
+        "sha256": "8966e15c395e5e37591b6ed0bd2ae7f48e961f0f60ac4c733f9566b519453085"
     },
     {
         "type": "file",
@@ -133,9 +133,9 @@
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/phoenix_live_dashboard-0.7.2.tar",
+        "url": "https://repo.hex.pm/tarballs/phoenix_live_dashboard-0.8.0.tar",
         "dest": ".hex/packages/hexpm",
-        "sha256": "0e5fdf063c7a3b620c566a30fcf68b7ee02e5e46fe48ee46a6ec3ba382dc05b7"
+        "sha256": "87785a54474fed91a67a1227a741097eb1a42c2e49d3c0d098b588af65cd410d"
     },
     {
         "type": "file",
@@ -145,9 +145,9 @@
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/phoenix_live_view-0.18.18.tar",
+        "url": "https://repo.hex.pm/tarballs/phoenix_live_view-0.19.4.tar",
         "dest": ".hex/packages/hexpm",
-        "sha256": "a5810d0472f3189ede6d2a95bda7f31c6113156b91784a3426cb0ab6a6d85214"
+        "sha256": "fd2c666d227476d63af7b8c20e6e61d16f07eb49f924cf4198fca7668156f15b"
     },
     {
         "type": "file",
@@ -157,9 +157,9 @@
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/phoenix_template-1.0.1.tar",
+        "url": "https://repo.hex.pm/tarballs/phoenix_template-1.0.3.tar",
         "dest": ".hex/packages/hexpm",
-        "sha256": "157dc078f6226334c91cb32c1865bf3911686f8bcd6bcff86736f6253e6993ee"
+        "sha256": "16f4b6588a4152f3cc057b9d0c0ba7e82ee23afa65543da535313ad8d25d8e2c"
     },
     {
         "type": "file",
@@ -187,12 +187,6 @@
     },
     {
         "type": "file",
-        "url": "https://repo.hex.pm/tarballs/rustler-0.29.0.tar",
-        "dest": ".hex/packages/hexpm",
-        "sha256": "3fec912e623c111745dcc768e28784dfba6aabae13d0d41f1f07bbd8a52a957a"
-    },
-    {
-        "type": "file",
         "url": "https://repo.hex.pm/tarballs/tailwind-0.2.1.tar",
         "dest": ".hex/packages/hexpm",
         "sha256": "e8a13f6107c95f73e58ed1b4221744e1eb5a093cd1da244432067e19c8c9a277"
@@ -214,12 +208,6 @@
         "url": "https://repo.hex.pm/tarballs/telemetry_poller-1.0.0.tar",
         "dest": ".hex/packages/hexpm",
         "sha256": "b3a24eafd66c3f42da30fc3ca7dda1e9d546c12250a2d60d7b81d264fbec4f6e"
-    },
-    {
-        "type": "file",
-        "url": "https://repo.hex.pm/tarballs/toml-0.7.0.tar",
-        "dest": ".hex/packages/hexpm",
-        "sha256": "0690246a2478c1defd100b0c9b89b4ea280a22be9a7b313a8a058a2408a2fa70"
     },
     {
         "type": "file",
