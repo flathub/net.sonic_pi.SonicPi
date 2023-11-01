@@ -350,17 +350,13 @@
             ],
             "sources": [
                 {
-                    "//": "TODO: Point to 4.5.0 tarball when it's released",
-                    "type": "git",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi.git",
-                    "commit": "41a6728e86fb88d957690f05235d9acdfbb11aa0"
+                    "type": "archive",
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.5.0.zip",
+                    "sha256": "bc2315ef53b4c4954d96b6abbf9b67c22298a9a478f6b5256933110b4f1abc20"
                 },
                 {
                     "type": "patch",
-                    "paths": [ 
-                        "patches/sonic-pi-build-fixes.patch",
-                        "patches/sonic-pi-daemon.patch"
-                    ]
+                    "path": "patches/sonic-pi-build-fixes.patch"
                 },
                 {
                     "type": "file",
