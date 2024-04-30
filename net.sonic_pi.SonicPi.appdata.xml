@@ -24,6 +24,7 @@
     </description>
     <content_rating type="oars-1.1" />
     <launchable type="desktop-id">net.sonic_pi.SonicPi.desktop</launchable>
+    <developer_name>Soni Pi Developers</developer_name>
     <translation type="qt">sonic-pi</translation>
     <screenshots>
         <screenshot type="default">
@@ -38,18 +39,29 @@
     <releases>
         <release version="4.5.0" date="2023-11-01">
             <description>
-                <p>This release comes packed with a number of exciting new synths for you to play with. We have a new hard-hitting kick drum <code>:gabberkick</code> for that gabber sound and a new vintage electric piano <code>:rhodey</code> synth. There are also 16 new percussive synths inspired by the infamous TR-808 drum synthesiser. All the synths come with many opts for you to play with to manipulate and change the default timbres.</p>
-
+                <p>This release comes packed with a number of exciting
+                new synths for you to play with. We have a new
+                hard-hitting kick drum <code>:gabberkick</code> for
+                that gabber sound and a new vintage electric piano
+                <code>:rhodey</code> synth. There are also 16 new
+                percussive synths inspired by the infamous TR-808 drum
+                synthesiser. All the synths come with many opts for
+                you to play with to manipulate and change the default
+                timbres.</p>
                 <p>There are also a number of minor improvements and bug fixes as detailed below.</p>
-
                 <p>Have fun and get your live coded 808 on!</p>
-
                 <p>Synths:</p>
-
                 <ul>
-                    <li>New synth: <code>:rhodey</code> - The sound of an electric piano from the 60&#8217;s and 70&#8217;s, producing a characteristic metallic sound for notes below <code>:g2</code>. Adapted for Sonic Pi from <a href="https://sccode.org/1-522">SuperCollider Code</a>.</li>
-                    <li>New synth <code>:gabberkick</code> - An aggressive Gabber synth sound adapted for Sonic Pi from <a href="https://sccode.org/1-57r">SuperCollider Code</a></li>
-                    <li>16 new 808 inspired synths based on <a href="https://www.patreon.com/4H/posts">Yoshinosuke Horiuchi&#8217;s</a>: <code>:sc808_bassdrum</code>, <code>:sc808_snare</code>, <code>:sc808_clap</code>, <code>:sc808_tomlo</code>, <code>:sc808_tommid</code>, <code>:sc808_tomhi</code>, <code>:sc808_congalo</code>, <code>:sc808_congamid</code>, <code>:sc808_congahi</code>, <code>:sc808_rimshot</code>, <code>:sc808_claves</code>, <code>:sc808_maracas</code>, <code>:sc808_cowbell</code>, <code>:sc808_closed_hihat</code>, <code>:sc808_open_hihat</code>, <code>:sc808_cymbal</code>,</li>
+                    <li>New synth: <code>:rhodey</code> - The sound of
+                    an electric piano from the 60&#8217;s and
+                    70&#8217;s, producing a characteristic metallic
+                    sound for notes below <code>:g2</code>. Adapted
+                    for Sonic Pi from SuperCollider Code.</li>
+                    <li>New synth <code>:gabberkick</code> - An
+                    aggressive Gabber synth sound adapted for Sonic Pi
+                    from SuperCollider Code</li>
+                    <li>16 new 808 inspired synths based on
+                    Yoshinosuke Horiuchi&#8217;</li>
                 </ul>
 
                 <p>Improvements:</p>
@@ -66,10 +78,12 @@
                 </ul>
 
                 <p>Bugfixes:</p>
-
                 <ul>
-                    <li>Fixed a regression in the error reporting - &#8220;did you mean&#8221; suggestions now work again.</li>
-                    <li>Fix system language detection when the language is generic English</li>
+                    <li>Fixed a regression in the error reporting -
+                    &#8220;did you mean&#8221; suggestions now work
+                    again.</li>
+                    <li>Fix system language detection when the
+                    language is generic English</li>
                 </ul>
             </description>
         </release>
