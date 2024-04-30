@@ -19,7 +19,6 @@
         /* For pipewire */
         "--filesystem=xdg-run/pipewire-0",
         "--talk-name=org.mpris.MediaPlayer2",
-        "--own-name=org.mpris.MediaPlayer2.net.sonic_pi.SonicPi",
         /* Allow loading, saving files from anywhere (portals don’t work yet) */
         "--filesystem=home",
         /* Allow other instances to see lockfiles */
@@ -179,6 +178,7 @@
                 {
                     "type": "archive",
                     "url": "https://aubio.org/pub/aubio-0.4.9.tar.bz2",
+                    "disable-http-decompression": true,
                     "sha256": "d48282ae4dab83b3dc94c16cf011bcb63835c1c02b515490e1883049c3d1f3da"
                 },
                 {
@@ -242,9 +242,6 @@
         {
             "name": "crossguid",
             "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCROSSGUID_TESTS=OFF"
-            ],
             "cleanup": [
                 "*"
             ],
@@ -266,6 +263,9 @@
             "name": "catch2",
             "buildsystem": "cmake-ninja",
             "builddir": true,
+            "config-opts": [
+                "-DCATCH_BUILD_TESTING=OFF"
+            ],
             "cleanup": [
                 "*.a"
             ],
