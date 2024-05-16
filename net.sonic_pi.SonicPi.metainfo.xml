@@ -37,6 +37,14 @@
     <url type="bugtracker">https://github.com/sonic-pi-net/sonic-pi/issues</url>
     <url type="help">https://sonic-pi.net/tutorial.html</url>
     <releases>
+        <release version="4.5.1" date="2024-04-28">
+            <description>
+                <p>Only remove one level of comments when uncommenting</p>
+                <p>Improvements to the Chinese, Dutch, German,
+                Indonesian, Italian, Japanese and Russian
+                translations</p>
+            </description>
+        </release>
         <release version="4.5.0" date="2023-11-01">
             <description>
                 <p>This release comes packed with a number of exciting
