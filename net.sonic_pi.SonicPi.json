@@ -343,16 +343,16 @@
             ],
             "post-install": [
                 "cd app/build/linux_dist && cp -av * $FLATPAK_DEST",
-                "install -Dm644 -t $FLATPAK_DEST/share/metainfo net.sonic_pi.SonicPi.appdata.xml",
+                "install -Dm644 net.sonic_pi.SonicPi.metainfo.xml -t $FLATPAK_DEST/share/metainfo",
                 "install -Dm644 app/gui/qt/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
-                "install -Dm644 -t $FLATPAK_DEST/share/applications net.sonic_pi.SonicPi.desktop",
-                "install -Dm644 -t $FLATPAK_DEST/share/licenses/sonicpi LICENSE.md"
+                "install -Dm644 net.sonic_pi.SonicPi.desktop -t $FLATPAK_DEST/share/applications",
+                "install -Dm644 LICENSE.md -t $FLATPAK_DEST/share/licenses/sonicpi"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.5.0.zip",
-                    "sha256": "bc2315ef53b4c4954d96b6abbf9b67c22298a9a478f6b5256933110b4f1abc20"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.5.1.zip",
+                    "sha256": "db5c787950c09586334206b09fc45cd6f4430344d205dfa2d0416d56ad0cd2bc"
                 },
                 {
                     "type": "patch",
@@ -377,7 +377,7 @@
                 },
                 {
                     "type": "file",
-                    "path": "net.sonic_pi.SonicPi.appdata.xml"
+                    "path": "net.sonic_pi.SonicPi.metainfo.xml"
                 }
             ]
         }
