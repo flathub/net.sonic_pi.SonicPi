@@ -1,27 +1,20 @@
 {
     "id": "net.sonic_pi.SonicPi",
     "base": "io.qt.qtwebengine.BaseApp",
-    "base-version": "5.15-23.08",
+    "base-version": "5.15-24.08",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.15-23.08",
+    "runtime-version": "5.15-24.08",
     "command": "sonic-pi",
     "finish-args": [
-        /* X11 + XShm access */
         "--share=ipc",
         "--socket=x11",
-        /* Note playback */
         "--socket=pulseaudio",
-        /* MIDI */
-        "--device=all",
-        /* OSC control */
+        "--device=dri",
         "--share=network",
-        /* For pipewire */
         "--filesystem=xdg-run/pipewire-0",
         "--talk-name=org.mpris.MediaPlayer2",
-        /* Allow loading, saving files from anywhere (portals don’t work yet) */
         "--filesystem=home",
-        /* Allow other instances to see lockfiles */
         "--env=TMPDIR=/var/tmp",
         "--env=QT_ENABLE_HIGHDPI_SCALING=1"
     ],
@@ -164,8 +157,8 @@
             "name": "aubio",
             "buildsystem": "simple",
             "build-commands": [
-                "./waf configure --prefix=$FLATPAK_DEST --disable-avcodec build -j $FLATPAK_BUILDER_N_JOBS",
-                "./waf install"
+                "python3 ./waf configure --prefix=$FLATPAK_DEST --disable-avcodec build -j $FLATPAK_BUILDER_N_JOBS",
+                "python3 ./waf install"
             ],
             "cleanup": [
                 "/bin",
@@ -182,10 +175,9 @@
                     "sha256": "d48282ae4dab83b3dc94c16cf011bcb63835c1c02b515490e1883049c3d1f3da"
                 },
                 {
-                    "//": "Fix vendored old waf for python 3.11",
                     "type": "patch",
-                    "path": "patches/aubio.patch"
-                }
+		    "path": "patches/aubio-python.patch"
+		}
             ]
         },
         {

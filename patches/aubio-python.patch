@@ -1,0 +1,78 @@
+diff -dupr a/waflib/ConfigSet.py b/waflib/ConfigSet.py
+--- a/waflib/ConfigSet.py	2018-06-27 06:22:05.000000000 +0100
++++ b/waflib/ConfigSet.py	2024-12-30 10:45:17.112728655 +0000
+@@ -4,7 +4,7 @@
+ 
+ import copy,re,os
+ from waflib import Logs,Utils
+-re_imp=re.compile('^(#)*?([^#=]*?)\ =\ (.*?)$',re.M)
++re_imp=re.compile(r'^(#)*?([^#=]*?)\ =\ (.*?)$',re.M)
+ class ConfigSet(object):
+ 	__slots__=('table','parent')
+ 	def __init__(self,filename=None):
+@@ -146,7 +146,7 @@ class ConfigSet(object):
+ 		Utils.writef(filename,''.join(buf))
+ 	def load(self,filename):
+ 		tbl=self.table
+-		code=Utils.readf(filename,m='rU')
++		code=Utils.readf(filename,m='r')
+ 		for m in re_imp.finditer(code):
+ 			g=m.group
+ 			tbl[g(2)]=eval(g(3))
+diff -dupr a/waflib/Context.py b/waflib/Context.py
+--- a/waflib/Context.py	2018-12-23 11:11:54.000000000 +0000
++++ b/waflib/Context.py	2024-12-30 11:03:31.669675395 +0000
+@@ -2,7 +2,7 @@
+ # encoding: utf-8
+ # WARNING! Do not edit! https://waf.io/book/index.html#_obtaining_the_waf_file
+ 
+-import os,re,imp,sys
++import os,re,types,sys
+ from waflib import Utils,Errors,Logs
+ import waflib.Node
+ HEXVERSION=0x2000e00
+@@ -106,7 +106,7 @@ class Context(ctx):
+ 				cache[node]=True
+ 				self.pre_recurse(node)
+ 				try:
+-					function_code=node.read('rU',encoding)
++					function_code=node.read('r',encoding)
+ 					exec(compile(function_code,node.abspath(),'exec'),self.exec_dict)
+ 				finally:
+ 					self.post_recurse(node)
+@@ -344,9 +344,9 @@ def load_module(path,encoding=None):
+ 		return cache_modules[path]
+ 	except KeyError:
+ 		pass
+-	module=imp.new_module(WSCRIPT_FILE)
++	module=types.ModuleType(WSCRIPT_FILE)
+ 	try:
+-		code=Utils.readf(path,m='rU',encoding=encoding)
++		code=Utils.readf(path,m='r',encoding=encoding)
+ 	except EnvironmentError:
+ 		raise Errors.WafError('Could not read the file %r'%path)
+ 	module_dir=os.path.dirname(path)
+diff -dupr a/waflib/Utils.py b/waflib/Utils.py
+--- a/waflib/Utils.py	2018-12-21 10:45:01.000000000 +0000
++++ b/waflib/Utils.py	2024-12-30 10:45:17.113728650 +0000
+@@ -440,7 +440,7 @@ def unversioned_sys_platform():
+ 		return s
+ 	if s=='cli'and os.name=='nt':
+ 		return'win32'
+-	return re.split('\d+$',s)[0]
++	return re.split(r'\d+$',s)[0]
+ def nada(*k,**kw):
+ 	pass
+ class Timer(object):
+diff -dupr a/waflib/ansiterm.py b/waflib/ansiterm.py
+--- a/waflib/ansiterm.py	2018-06-22 10:25:51.000000000 +0100
++++ b/waflib/ansiterm.py	2024-12-30 10:45:17.113728650 +0000
+@@ -175,7 +175,7 @@ else:
+ 			self._csinfo.bVisible=0
+ 			windll.kernel32.SetConsoleCursorInfo(self.hconsole,byref(self._csinfo))
+ 		ansi_command_table={'A':move_up,'B':move_down,'C':move_right,'D':move_left,'E':next_line,'F':prev_line,'G':set_column,'H':set_cursor,'f':set_cursor,'J':clear_screen,'K':clear_line,'h':show_cursor,'l':hide_cursor,'m':set_color,'s':push_cursor,'u':pop_cursor,}
+-		ansi_tokens=re.compile('(?:\x1b\[([0-9?;]*)([a-zA-Z])|([^\x1b]+))')
++		ansi_tokens=re.compile(r'(?:\x1b\[([0-9?;]*)([a-zA-Z])|([^\x1b]+))')
+ 		def write(self,text):
+ 			try:
+ 				wlock.acquire()
