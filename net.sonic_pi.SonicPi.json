@@ -1,14 +1,15 @@
 {
     "id": "net.sonic_pi.SonicPi",
     "base": "io.qt.qtwebengine.BaseApp",
-    "base-version": "5.15-24.08",
+    "base-version": "6.9",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "5.15-24.08",
+    "runtime-version": "6.9",
     "command": "sonic-pi",
     "finish-args": [
         "--share=ipc",
-        "--socket=x11",
+        "--socket=fallback-x11",
+        "--socket=wayland",
         "--socket=pulseaudio",
         "--device=dri",
         "--share=network",
@@ -19,6 +20,8 @@
         "--env=QT_ENABLE_HIGHDPI_SCALING=1"
     ],
     "cleanup": [
+        "/share/man",
+        "/share/pkgconfig"
     ],
     "cleanup-commands": [
         "/app/cleanup-BaseApp.sh"
@@ -102,11 +105,13 @@
             "builddir": true,
             "cleanup": [
                 "/include",
-                "/lib/gedit"
+                "/lib/gedit",
+                "/share/pkgconfig"
             ],
             "config-opts": [
                 "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
-                "-DSC_EL=NO"
+                "-DSC_EL=NO",
+                "-DSC_QT=OFF"
             ],
             "sources": [
                 {
@@ -259,6 +264,7 @@
                 "-DCATCH_BUILD_TESTING=OFF"
             ],
             "cleanup": [
+                "/share/doc",
                 "*.a"
             ],
             "sources": [
@@ -276,12 +282,32 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.riverbankcomputing.com/static/Downloads/QScintilla/2.13.3/QScintilla_src-2.13.3.tar.gz",
-                    "sha256": "711d28e37c8fccaa8229e8e39a5b3b2d97f3fffc63da10b71c71b84fa3649398"
+                    "url": "https://www.riverbankcomputing.com/static/Downloads/QScintilla/2.14.0/QScintilla_src-2.14.0.tar.gz",
+                    "sha256": "449353928340300804c47b3785c3e62096f918a723d5eed8a5439764e6507f4c"
                 },
                 {
                     "type": "patch",
                     "path": "patches/qscintilla-lib-paths.patch"
+                }
+            ]
+        },
+        {
+            "name": "boost",
+            "buildsystem": "simple",
+            "cleanup": [
+                "/include",
+                "/lib/libboost_*.so*",
+                "/lib/libboost_*.a"
+            ],
+            "build-commands": [
+                "./bootstrap.sh --with-libraries=filesystem,system,thread",
+                "./b2 install variant=release link=shared runtime-link=shared --prefix=/app -j $FLATPAK_BUILDER_N_JOBS"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/project/boost/boost/1.74.0/boost_1_74_0.tar.bz2",
+                    "sha256": "83bfc1507731a0906e387fc28b7ef5417d591429e51e788417fe9ff025e116b1"
                 }
             ]
         },
@@ -300,7 +326,7 @@
             },
             "build-commands": [
                 "cd app && ./linux-prebuild.sh --offline-build",
-                "cd app && ./linux-config.sh --offline-build -n --config RelWithDebInfo",
+                "cd app && ./linux-config.sh --config RelWithDebInfo",
                 "cmake --build app/build",
                 "cd app/server/beam/tau && mix archive.install ../../../../hex.ez --force",
                 "cd app/server/beam/tau && mix local.rebar rebar3 ../../../../rebar3",
@@ -336,15 +362,15 @@
             "post-install": [
                 "cd app/build/linux_dist && cp -av * $FLATPAK_DEST",
                 "install -Dm644 net.sonic_pi.SonicPi.metainfo.xml -t $FLATPAK_DEST/share/metainfo",
-                "install -Dm644 app/gui/qt/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
+                "install -Dm644 app/gui/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
                 "install -Dm644 net.sonic_pi.SonicPi.desktop -t $FLATPAK_DEST/share/applications",
                 "install -Dm644 LICENSE.md -t $FLATPAK_DEST/share/licenses/sonicpi"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.5.1.zip",
-                    "sha256": "db5c787950c09586334206b09fc45cd6f4430344d205dfa2d0416d56ad0cd2bc"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.6.0.zip",
+                    "sha256": "5bd18d203bc081d7747ef7f0c2828d0b60160cdc74ba935f8aaf69f9eda9e18a"
                 },
                 {
                     "type": "patch",
