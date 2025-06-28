@@ -37,6 +37,9 @@
     <url type="bugtracker">https://github.com/sonic-pi-net/sonic-pi/issues</url>
     <url type="help">https://sonic-pi.net/tutorial.html</url>
     <releases>
+        <release version="4.6.0" date="2024-06-26">
+            <url>https://github.com/sonic-pi-net/sonic-pi/releases/tag/v4.6.0</url>
+        </release>
         <release version="4.5.1" date="2024-04-28">
             <description>
                 <p>Only remove one level of comments when uncommenting</p>
