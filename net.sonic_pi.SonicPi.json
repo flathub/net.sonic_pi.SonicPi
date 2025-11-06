@@ -1,10 +1,10 @@
 {
     "id": "net.sonic_pi.SonicPi",
     "base": "io.qt.qtwebengine.BaseApp",
-    "base-version": "6.9",
+    "base-version": "6.10",
     "runtime": "org.kde.Platform",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "6.9",
+    "runtime-version": "6.10",
     "command": "sonic-pi",
     "finish-args": [
         "--share=ipc",
@@ -50,6 +50,7 @@
                 "*.a"
             ],
             "build-options": {
+                "cflags": "-std=gnu17",
                 "no-debuginfo": true
             },
             "sources": [
@@ -81,6 +82,9 @@
         },
         {
             "name": "ruby",
+            "build-options": {
+                "cflags": "-std=gnu17"
+            },
             "config-opts": [
                 "--enable-shared"
             ],
@@ -109,6 +113,7 @@
                 "/share/pkgconfig"
             ],
             "config-opts": [
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
                 "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
                 "-DSC_EL=NO",
                 "-DSC_QT=OFF"
@@ -121,7 +126,10 @@
                 },
                 {
                     "type": "patch",
-                    "path": "patches/sc-sdnfile.patch"
+                    "paths": [
+                        "patches/sc-sdnfile.patch",
+                        "patches/sc-boost.patch"
+                    ]
                 }
             ]
         },
@@ -129,6 +137,7 @@
             "name": "sc3-plugins",
             "buildsystem": "cmake-ninja",
             "config-opts": [
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
                 "-DSC_PATH=/app/include/SuperCollider/",
                 "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
                 "-DSUPERNOVA=ON"
@@ -138,6 +147,10 @@
                     "type": "archive",
                     "url": "https://github.com/supercollider/sc3-plugins/releases/download/Version-3.11.1/sc3-plugins-3.11.1-Source.tar.bz2",
                     "sha256": "263526bbb3c9fb1df24626ebf80bf68134449e0e757cfa3b464f81e32d89be44"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/sc3-plugins-header.patch"
                 }
             ]
         },
@@ -153,7 +166,7 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://www.music.mcgill.ca/~gary/rtmidi/release/rtmidi-5.0.0.tar.gz",
+                    "url": "http://caml.music.mcgill.ca/~gary/rtmidi/release/rtmidi-5.0.0.tar.gz",
                     "sha256": "48db0ed58c8c0e207b5d7327a0210b5bcaeb50e26387935d02829239b0f3c2b9"
                 }
             ]
@@ -181,13 +194,16 @@
                 },
                 {
                     "type": "patch",
-		    "path": "patches/aubio-python.patch"
-		}
+                    "path": "patches/aubio-python.patch"
+                }
             ]
         },
         {
             "name": "platform-folders",
             "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+            ],
             "cleanup": [
                 "*"
             ],
@@ -212,8 +228,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/DaanDeMeyer/reproc.git",
-                    "//": "Unreleased fix for GCC 13; TODO: point to first release > 14.2.4 when it's out",
-                    "commit": "9f399675b821e175f85ac3ee6e3fd2e6056573eb"
+                    "tag": "v14.2.5",
+                    "commit": "3179928ae7b085e41dfb846d987519fa7c12ffb3"
                 }
             ]
         },
@@ -306,8 +322,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://downloads.sourceforge.net/project/boost/boost/1.74.0/boost_1_74_0.tar.bz2",
-                    "sha256": "83bfc1507731a0906e387fc28b7ef5417d591429e51e788417fe9ff025e116b1"
+                    "url": "https://archives.boost.io/release/1.76.0/source/boost_1_76_0.tar.bz2",
+                    "sha256": "f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41"
                 }
             ]
         },
