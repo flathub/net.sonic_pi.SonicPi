@@ -45,7 +45,7 @@
                 "--without-ssh"
             ],
             "cleanup": [
-                "/lib/erlang/erts-11.1/include",
+                "/lib/erlang/erts-*/include",
                 "/lib/erlang/usr/include",
                 "*.a"
             ],
@@ -379,8 +379,7 @@
                 "cd app/build/linux_dist && cp -av * $FLATPAK_DEST",
                 "install -Dm644 net.sonic_pi.SonicPi.metainfo.xml -t $FLATPAK_DEST/share/metainfo",
                 "install -Dm644 app/gui/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
-                "install -Dm644 net.sonic_pi.SonicPi.desktop -t $FLATPAK_DEST/share/applications",
-                "install -Dm644 LICENSE.md -t $FLATPAK_DEST/share/licenses/sonicpi"
+                "install -Dm644 net.sonic_pi.SonicPi.desktop -t $FLATPAK_DEST/share/applications"
             ],
             "sources": [
                 {
