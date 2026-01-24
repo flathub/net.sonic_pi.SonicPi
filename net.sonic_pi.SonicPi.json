@@ -211,7 +211,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/sago007/PlatformFolders.git",
-                    "tag": "4.2.0"
+                    "tag": "4.2.0",
+                    "commit": "784f8ceb8bbd042722caf2cdec427c7b80e0a960"
                 }
             ]
         },
@@ -248,7 +249,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/mborgerding/kissfft.git",
-                    "tag": "131.1.0"
+                    "tag": "131.1.0",
+                    "commit": "8f47a67f595a6641c566087bf5277034be64f24d"
                 }
             ]
         },
@@ -287,7 +289,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/catchorg/Catch2.git",
-                    "tag": "v3.4.0"
+                    "tag": "v3.4.0",
+                    "commit": "6e79e682b726f524310d55dec8ddac4e9c52fb5f"
                 }
             ]
         },
