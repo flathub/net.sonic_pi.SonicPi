@@ -35,6 +35,7 @@
     <update_contact>hub_AT_figuiere.net</update_contact>
     <url type="homepage">https://sonic-pi.net/</url>
     <url type="bugtracker">https://github.com/sonic-pi-net/sonic-pi/issues</url>
+    <url type="vcs-browser">https://github.com/sonic-pi-net/sonic-pi/</url>
     <url type="help">https://sonic-pi.net/tutorial.html</url>
     <releases>
         <release version="4.6.0" date="2024-06-26">
