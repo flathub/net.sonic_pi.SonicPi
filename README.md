@@ -2,12 +2,6 @@
 
 This is SonicPi flatpak
 
-## Upgrading elixir dependencies
+## Install
 
-This step is likely necessary at each release.
-
-Unpack the archive. From the top-level of the unpacked source call
-the script `scripts/elixir-deps.py`. This will update
-`sources/elixir-dependencies.json` and `cache.ets`.
-
-
+Lot of SonicPi installation isn't done by the build system.
