@@ -1,11 +1,12 @@
 {
     "id": "net.sonic_pi.SonicPi",
-    "base": "io.qt.qtwebengine.BaseApp",
-    "base-version": "6.10",
     "runtime": "org.kde.Platform",
+    "runtime-version": "6.11",
     "sdk": "org.kde.Sdk",
-    "runtime-version": "6.10",
     "command": "sonic-pi",
+    "sdk-extensions": [
+        "org.freedesktop.Sdk.Extension.rust-stable"
+    ],
     "finish-args": [
         "--share=ipc",
         "--socket=fallback-x11",
@@ -13,73 +14,19 @@
         "--socket=pulseaudio",
         "--device=dri",
         "--share=network",
-        "--filesystem=xdg-run/pipewire-0",
-        "--talk-name=org.mpris.MediaPlayer2",
+        "--filesystem=xdg-run/pipewire-0:ro",
         "--filesystem=home",
-        "--env=TMPDIR=/var/tmp",
-        "--env=QT_ENABLE_HIGHDPI_SCALING=1"
+        "--env=TMPDIR=/var/tmp"
     ],
     "cleanup": [
+        "/include",
+        "/lib/cmake",
+        "/lib/pkgconfig",
+        "/lib/qt5",
         "/share/man",
         "/share/pkgconfig"
     ],
-    "cleanup-commands": [
-        "/app/cleanup-BaseApp.sh"
-    ],
     "modules": [
-        {
-            "name": "erlang-otp",
-            "config-opts": [
-                "--disable-pgo",
-                "--without-hipe",
-                "--without-javac",
-                "--without-eldap",
-                "--without-snmp",
-                "--without-megaco",
-                "--without-diameter",
-                "--without-os_mon",
-                "--without-mnesia",
-                "--without-otp_mibs",
-                "--without-tftp",
-                "--without-ftp",
-                "--without-ssh"
-            ],
-            "cleanup": [
-                "/lib/erlang/erts-*/include",
-                "/lib/erlang/usr/include",
-                "*.a"
-            ],
-            "build-options": {
-                "cflags": "-std=gnu17",
-                "no-debuginfo": true
-            },
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/erlang/otp/releases/download/OTP-24.3.4.2/otp_src_24.3.4.2.tar.gz",
-                    "sha256": "0376d50f867a29426d47600056e8cc49c95b51ef172b6b9030628e35aecd46af"
-                }
-            ]
-        },
-        {
-            "name": "elixir",
-            "buildsystem": "simple",
-            "build-options": {
-                "env": {
-                    "PREFIX": "/app"
-                }
-            },
-            "build-commands": [
-                "make install"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/elixir-lang/elixir/archive/v1.14.0.zip",
-                    "sha256": "6cece7317044233996e6056e86a09e8ba25971c5f60130738d0b6baccb3b99e0"
-                }
-            ]
-        },
         {
             "name": "ruby",
             "build-options": {
@@ -102,80 +49,11 @@
                 }
             ]
         },
-        "shared-modules/linux-audio/fftw3f.json",
-        {
-            "name": "supercollider",
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "cleanup": [
-                "/include",
-                "/lib/gedit",
-                "/share/pkgconfig"
-            ],
-            "config-opts": [
-                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
-                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
-                "-DSC_EL=NO",
-                "-DSC_QT=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/supercollider/supercollider/releases/download/Version-3.11.2/SuperCollider-3.11.2-Source.tar.bz2",
-                    "sha256": "c22c32c6bc482671d4fb8f51672df712d97a6a6277235c4da2312910303a0506"
-                },
-                {
-                    "type": "patch",
-                    "paths": [
-                        "patches/sc-sdnfile.patch",
-                        "patches/sc-boost.patch"
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "sc3-plugins",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
-                "-DSC_PATH=/app/include/SuperCollider/",
-                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
-                "-DSUPERNOVA=ON"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/supercollider/sc3-plugins/releases/download/Version-3.11.1/sc3-plugins-3.11.1-Source.tar.bz2",
-                    "sha256": "263526bbb3c9fb1df24626ebf80bf68134449e0e757cfa3b464f81e32d89be44"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/sc3-plugins-header.patch"
-                }
-            ]
-        },
-        {
-            "name": "rtmidi",
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig",
-                "*.la",
-                "*.a",
-                "*.so"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://caml.music.mcgill.ca/~gary/rtmidi/release/rtmidi-5.0.0.tar.gz",
-                    "sha256": "48db0ed58c8c0e207b5d7327a0210b5bcaeb50e26387935d02829239b0f3c2b9"
-                }
-            ]
-        },
         {
             "name": "aubio",
             "buildsystem": "simple",
             "build-commands": [
-                "python3 ./waf configure --prefix=$FLATPAK_DEST --disable-avcodec build -j $FLATPAK_BUILDER_N_JOBS",
+                "python3 ./waf configure --prefix=$FLATPAK_DEST --libdir=/app/lib --disable-avcodec build -j $FLATPAK_BUILDER_N_JOBS",
                 "python3 ./waf install"
             ],
             "cleanup": [
@@ -199,102 +77,6 @@
             ]
         },
         {
-            "name": "platform-folders",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
-            ],
-            "cleanup": [
-                "*"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/sago007/PlatformFolders.git",
-                    "tag": "4.2.0",
-                    "commit": "784f8ceb8bbd042722caf2cdec427c7b80e0a960"
-                }
-            ]
-        },
-        {
-            "name": "reproc",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DREPROC++=ON"
-            ],
-            "cleanup": [
-                "*"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/DaanDeMeyer/reproc.git",
-                    "tag": "v14.2.5",
-                    "commit": "3179928ae7b085e41dfb846d987519fa7c12ffb3"
-                }
-            ]
-        },
-        {
-            "name": "kissfft",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DKISSFFT_TOOLS=OFF"
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/cmake",
-                "/lib/pkgconfig"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/mborgerding/kissfft.git",
-                    "tag": "131.1.0",
-                    "commit": "8f47a67f595a6641c566087bf5277034be64f24d"
-                }
-            ]
-        },
-        {
-            "name": "crossguid",
-            "buildsystem": "cmake-ninja",
-            "cleanup": [
-                "*"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/graeme-hill/crossguid.git",
-                    "//": "The 0.2.2 doesn't even have .pc or install rules",
-                    "commit": "ca1bf4b810e2d188d04cb6286f957008ee1b7681"
-                },
-                {
-                    "//": "Fix for GCC 13",
-                    "type": "patch",
-                    "path": "patches/crossguid.patch"
-                }
-            ]
-        },
-        {
-            "name": "catch2",
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "config-opts": [
-                "-DCATCH_BUILD_TESTING=OFF"
-            ],
-            "cleanup": [
-                "/share/doc",
-                "*.a"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/catchorg/Catch2.git",
-                    "tag": "v3.4.0",
-                    "commit": "6e79e682b726f524310d55dec8ddac4e9c52fb5f"
-                }
-            ]
-        },
-        {
             "name": "qscintilla",
             "buildsystem": "qmake",
             "subdir": "src",
@@ -311,102 +93,106 @@
             ]
         },
         {
-            "name": "boost",
-            "buildsystem": "simple",
-            "cleanup": [
-                "/include",
-                "/lib/libboost_*.so*",
-                "/lib/libboost_*.a"
-            ],
-            "build-commands": [
-                "./bootstrap.sh --with-libraries=filesystem,system,thread",
-                "./b2 install variant=release link=shared runtime-link=shared --prefix=/app -j $FLATPAK_BUILDER_N_JOBS"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://archives.boost.io/release/1.76.0/source/boost_1_76_0.tar.bz2",
-                    "sha256": "f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41"
-                }
-            ]
-        },
-        {
             "name": "sonicpi",
-            "buildsystem": "simple",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "subdir": "app",
             "build-options": {
+                "append-path": "/usr/lib/sdk/rust-stable/bin",
                 "env": {
-                    "CMAKE_PREFIX_PATH": "/app",
-                    "MIX_XDG": "true",
-                    "MIX_HOME": "/run/build/sonicpi/.mix",
-                    "MIX_ENV": "prod",
-                    "HEX_HOME": "/run/build/sonicpi/.hex",
-                    "HEX_OFFLINE": "true"
+                    "CARGO_HOME": "/run/build/sonicpi/cargo-home"
                 }
             },
-            "build-commands": [
-                "cd app && ./linux-prebuild.sh --offline-build",
-                "cd app && ./linux-config.sh --config RelWithDebInfo",
-                "cmake --build app/build",
-                "cd app/server/beam/tau && mix archive.install ../../../../hex.ez --force",
-                "cd app/server/beam/tau && mix local.rebar rebar3 ../../../../rebar3",
-                "cd app/server/beam/tau && mix deps.get && mix release --overwrite",
-                "cd app && ./linux-release.sh"
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DSONIC_PI_INSTALL_ROOT=/app/sonic-pi",
+                "-DSUPERSONIC_SYSTEM_SNDFILE=ON",
+                "-DFETCHCONTENT_FULLY_DISCONNECTED=ON",
+                "-DSUPERSONIC_CARGO_OFFLINE=ON",
+                "-DFETCHCONTENT_SOURCE_DIR_ABLETONLINK=/run/build/sonicpi/link"
             ],
             "cleanup": [
-                "/app/server/ruby/vendor/rugged-*/test",
-                "/app/server/ruby/vendor/rugged-*/ext/rugged/*.o",
-                "/app/server/ruby/vendor/rugged-*/ext/rugged/*.c",
-                "/app/server/ruby/vendor/rugged-*/vendor/libgit2",
-                "/app/server/ruby/vendor/kramdown-*/benchmark",
-                "/app/server/ruby/vendor/kramdown-*/doc",
-                "/app/server/ruby/vendor/kramdown-*/test",
-                "/app/server/ruby/vendor/ruby-coreaudio-*/examples",
-                "/app/server/ruby/vendor/ruby-coreaudio-*/ext",
-                "/app/server/ruby/vendor/atomic/ext",
-                "/app/server/ruby/vendor/thread_safe/ext",
-                "/app/server/ruby/vendor/parslet/example",
-                "/app/server/ruby/vendor/parslet/website",
-                "/app/server/ruby/vendor/gettext-*/bin",
-                "/app/server/ruby/vendor/gettext-*/samples",
-                "/app/server/ruby/vendor/gettext-*/test",
-                "/app/server/ruby/vendor/narray-*/test",
-                "/app/server/ruby/vendor/mocha-*/test",
-                "/app/server/ruby/vendor/wavefile-*/examples",
-                "/app/server/ruby/vendor/wavefile-*/test",
-                "/app/server/ruby/vendor/wavefile-*/tools",
-                "/app/server/ruby/vendor/ruby-aubio-*/bin",
-                "/app/server/ruby/vendor/ruby-aubio-*/test",
-                "/app/server/ruby/vendor/ffi-*"
+                "/sonic-pi/server/ruby/rb-native",
+                "/sonic-pi/app/server/ruby/vendor/concurrent-ruby-*/examples",
+                "/sonic-pi/app/server/ruby/vendor/concurrent-ruby-*/ext/concurrent-ruby",
+                "/sonic-pi/app/server/ruby/vendor/concurrent-ruby-*/ext/concurrent-ruby-ext/*.c",
+                "/sonic-pi/app/server/ruby/vendor/concurrent-ruby-*/ext/concurrent-ruby-ext/*.h",
+                "/sonic-pi/app/server/ruby/vendor/gettext-*/bin",
+                "/sonic-pi/app/server/ruby/vendor/gettext-*/samples",
+                "/sonic-pi/app/server/ruby/vendor/gettext-*/test",
+                "/sonic-pi/app/server/ruby/vendor/i18n-*/test",
+                "/sonic-pi/app/server/ruby/vendor/kramdown-*/benchmark",
+                "/sonic-pi/app/server/ruby/vendor/kramdown-*/doc",
+                "/sonic-pi/app/server/ruby/vendor/kramdown-*/test",
+                "/sonic-pi/app/server/ruby/vendor/locale-*/test",
+                "/sonic-pi/app/server/ruby/vendor/locale-*/samples",
+                "/sonic-pi/app/server/ruby/vendor/memoist-*/test",
+                "/sonic-pi/app/server/ruby/vendor/metaclass-*/test",
+                "/sonic-pi/app/server/ruby/vendor/minitest-*/test",
+                "/sonic-pi/app/server/ruby/vendor/mocha-*/test",
+                "/sonic-pi/app/server/ruby/vendor/rugged-*/test",
+                "/sonic-pi/app/server/ruby/vendor/rugged-*/ext/rugged/*.c",
+                "/sonic-pi/app/server/ruby/vendor/rugged-*/ext/rugged/*.h",
+                "/sonic-pi/app/server/ruby/vendor/rugged-*/ext/rugged/*.o",
+                "/sonic-pi/app/server/ruby/vendor/rugged-*/vendor/libgit2",
+                "/sonic-pi/app/server/ruby/vendor/tomlrb-*/test",
+                "/sonic-pi/app/server/ruby/vendor/tzinfo-*/test",
+                "/sonic-pi/app/server/ruby/vendor/wavefile-*/examples",
+                "/sonic-pi/app/server/ruby/vendor/wavefile-*/test",
+                "/sonic-pi/app/server/ruby/vendor/wavefile-*/tools",
+                ".github"
             ],
             "post-install": [
-                "cd app/build/linux_dist && cp -av * $FLATPAK_DEST",
-                "install -Dm644 net.sonic_pi.SonicPi.metainfo.xml -t $FLATPAK_DEST/share/metainfo",
-                "install -Dm644 app/gui/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
-                "install -Dm644 net.sonic_pi.SonicPi.desktop -t $FLATPAK_DEST/share/applications"
+                "install -Dm755 gui/sonic-pi -t ${FLATPAK_DEST}/bin",
+                "install -d ${FLATPAK_DEST}/sonic-pi/app/gui",
+                "cp -R ../gui/theme ${FLATPAK_DEST}/sonic-pi/app/gui/",
+                "install -Dm644 ../../VERSION ${FLATPAK_DEST}/sonic-pi/",
+                "install -d ${FLATPAK_DEST}/sonic-pi/app/server/native/",
+                "cp -R ../server/native/* ${FLATPAK_DEST}/sonic-pi/app/server/native/",
+                "install -d ${FLATPAK_DEST}/sonic-pi/app/server/ruby/",
+                "cp -R ../server/ruby/* ${FLATPAK_DEST}/sonic-pi/app/server/ruby/",
+                "install -d ${FLATPAK_DEST}/sonic-pi/etc/synthdefs/",
+                "cp -R ../../etc/synthdefs/compiled ${FLATPAK_DEST}/sonic-pi/etc/synthdefs/",
+                "cp -R ../../etc/examples ${FLATPAK_DEST}/sonic-pi/etc/",
+                "cp -R ../../etc/snippets ${FLATPAK_DEST}/sonic-pi/etc/",
+                "install -Dm644 ../../etc/buffers/*.wav -t ${FLATPAK_DEST}/sonic-pi/etc/buffers",
+                "install -Dm644 ../../etc/samples/*.flac -t ${FLATPAK_DEST}/sonic-pi/etc/samples",
+                "install -Dm644 ../../net.sonic_pi.SonicPi.metainfo.xml -t $FLATPAK_DEST/share/metainfo",
+                "install -Dm644 ../gui/images/icon-smaller.png $FLATPAK_DEST/share/icons/hicolor/256x256/apps/$FLATPAK_ID.png",
+                "install -Dm644 ../../net.sonic_pi.SonicPi.desktop -t $FLATPAK_DEST/share/applications"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v4.6.0.zip",
-                    "sha256": "5bd18d203bc081d7747ef7f0c2828d0b60160cdc74ba935f8aaf69f9eda9e18a"
+                    "url": "https://github.com/sonic-pi-net/sonic-pi/archive/refs/tags/v5.0.0.zip",
+                    "sha256": "3b60b70559e46ef6680d8922776b49b04abf767c47d1279cf0edda6bfa8ca284"
                 },
+		{
+		    "type": "git",
+		    "url": "https://github.com/samaaron/supersonic",
+		    "commit": "2652a28eb6cb51a4fb696fca2f04b3e073bd26c2",
+		    "dest": "app/external/supersonic"
+		},
+		{
+		    "type": "git",
+		    "url": "https://github.com/Ableton/link.git",
+		    "tag": "Link-4.0",
+		    "commit": "e9a2e414d63f55f1aad158370b007a6fbdc1eeb9",
+		    "dest": "link"
+		},
+		{
+		    "type": "inline",
+		    "dest": "cargo-home",
+		    "dest-filename": "config.toml",
+		    "contents": "[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[source.vendored-sources]\ndirectory = \"/run/build/sonicpi/cargo/vendor\""
+		},
+		"cargo-sources.json",
                 {
                     "type": "patch",
-                    "path": "patches/sonic-pi-build-fixes.patch"
+                    "paths": [
+			"patches/sonic-pi-build-fixes.patch"
+		    ]
                 },
-                {
-                    "type": "file",
-                    "url": "https://repo.hex.pm/installs/1.13.0/hex-1.0.1.ez",
-                    "dest-filename": "hex.ez",
-                    "sha256": "84bb9186d87ce91457b2aaaf5bf2d82cbe971240ee8e405228c8bdbb6af699fb"
-                },
-                {
-                    "type": "file",
-                    "url": "https://repo.hex.pm/installs/1.13.0/rebar3-3.15.2",
-                    "dest-filename": "rebar3",
-                    "sha256": "490f1ed8b2f6a6629f9680e5e9f477d101af03b13bbccfa2e5f314ab7ab0ba44"
-                },
-                "sources/elixir-dependencies.json",
                 {
                     "type": "file",
                     "path": "net.sonic_pi.SonicPi.desktop"
@@ -414,7 +200,17 @@
                 {
                     "type": "file",
                     "path": "net.sonic_pi.SonicPi.metainfo.xml"
-                }
+                },
+		{
+		    "type": "shell",
+		    "commands": [
+			"./app/linux-pre-translations.sh",
+			"cd link && git apply --ignore-whitespace ../app/external/supersonic/external/link-loopback-mode.patch",
+			"cd link && git apply --ignore-whitespace ../app/external/supersonic/external/link-peer-enumeration.patch",
+			"cd link && git apply --ignore-whitespace ../app/external/supersonic/external/link-monotonic-commit-timestamp.patch",
+			"cd link && git apply --ignore-whitespace ../app/external/supersonic/external/link-linkaudio-teardown-race.patch"
+		    ]
+		}
             ]
         }
     ]

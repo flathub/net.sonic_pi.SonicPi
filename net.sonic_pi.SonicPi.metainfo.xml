@@ -38,6 +38,9 @@
     <url type="vcs-browser">https://github.com/sonic-pi-net/sonic-pi/</url>
     <url type="help">https://sonic-pi.net/tutorial.html</url>
     <releases>
+        <release version="5.0.0" date="2026-08-07">
+            <url>https://github.com/sonic-pi-net/sonic-pi/releases/tag/v5.0.0</url>
+        </release>
         <release version="4.6.0" date="2024-06-26">
             <url>https://github.com/sonic-pi-net/sonic-pi/releases/tag/v4.6.0</url>
         </release>
